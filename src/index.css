@@ -1,0 +1,13 @@
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.logo-large {
+  width: 160px;
+  height: 160px;
+}
+
+.less {
+  display: none;
+}
