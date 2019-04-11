@@ -39,3 +39,9 @@ ageP.innerHTML = author.age;
 // ageP.innerHTML = authorAge;
 document.body.appendChild(nameP);
 document.body.appendChild(ageP);
+
+import Totoro from './Totoro';
+const guagua = new Totoro('guagua');
+const guaguaJump = document.createElement('p');
+guaguaJump.innerHTML = guagua.jump();
+document.body.appendChild(guaguaJump)

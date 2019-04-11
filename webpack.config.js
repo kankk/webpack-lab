@@ -79,7 +79,15 @@ module.exports = {
       // Less
       test: /\.less$/,
       use: ['style-loader', 'css-loader', 'less-loader']  // 从右往左编译
+    }, {
+      // typescript
+      test: /\.ts$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
     }]
+  },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
   },
   // plugins
   plugins: [
