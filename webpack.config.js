@@ -10,16 +10,20 @@ const OptimizeCSS = require('optimize-css-assets-webpack-plugin');
 const glob = require('glob');
 const PurifycssPlugin = require('purifycss-webpack');
 
+// 优化
+const WebpackUtils = require('./webpack-utils');
+
 // let publicPath = 'http://localhost:5000/static/assets'; // 打包的绝对路径
 
 module.exports = {
   mode: 'development',
-  entry: {
-    index: './src/index.js'
-  },
+  // entry: {
+  //   index: './src/index.js'
+  // },
+  entry: WebpackUtils.getMultiPagesEntry(),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].[hash].js'
   },
   // loaders
   module: {
@@ -91,10 +95,11 @@ module.exports = {
   },
   // plugins
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './src/index.html'
+    // }),
+    ...WebpackUtils.getMultiPagesPlugins(),
     new MinicssExtractPlugin({
       filename: 'static/css/[name].[hash:7].css'
     }),
