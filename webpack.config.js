@@ -35,7 +35,8 @@ module.exports = {
     ],
     alias: {
       components: path.resolve(__dirname, '/src/components')
-    }
+    },
+    extensions: [ '.tsx', '.ts', '.js' ]
   },
   // loaders
   module: {
@@ -102,8 +103,55 @@ module.exports = {
       exclude: /node_modules/
     }]
   },
-  resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+  // optimization
+  optimization: {
+    splitChunks: {
+      // all: 所有模块
+      // initial: 同步模块
+      // async: 异步模块
+      chunks: 'all',
+      minSize: 10000, // 提高缓存利用率, 这需要在https2/spdy
+      maxSize: 0,
+      minChunks: 2, // 共享最少的chunk数, 使用次数超过这个值才会被提取
+      maxAsyncRequests: 5,//最多的异步chunk数
+      maxInitialRequests: 5,// 最多的同步chunks数
+      automaticNameDelimiter: '~',// 多页面共用chunk命名分隔符
+      name: true,
+      cacheGroups: {  // 声明的公共chunk
+        vendor: {
+          test: module => {
+            if (module.resource) {
+              const include = [/[\\/]node_modules[\\/]/].every(reg => {
+                return reg.test(module.resource);
+              });
+              const exclude = [/[\\/]node_modules[\\/](react|redux|antd)/].some(reg => {
+                return reg.test(module.resource);
+              });
+              return include && !exclude;
+            }
+            return false;
+          },
+          name: 'vendor',
+          priority: 50,// 确定模块打入的优先级
+          reuseExistingChunk: true,// 使用复用已经存在的模块
+        },
+        default: {
+          test: module => {
+            if (module.resource) {
+              const include = [/[\\/]src[\\/]components[\\/]/].every(reg => {
+                return reg.test(module.resource);
+              });
+              return include;
+            }
+            return false;
+          },
+          // name: 'components',
+          minChunks: 1,
+          priority: 40,// 确定模块打入的优先级
+          reuseExistingChunk: true,// 使用复用已经存在的模块
+        }
+      }
+    }
   },
   // plugins
   plugins: [

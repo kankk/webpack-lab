@@ -26,7 +26,7 @@ function getMultiPagesEntry () {
     }
   }).forEach(file => {
     const name = path.basename(file);
-    entry[name] = [...COMMON_ENTRY, `${PAGES_DIR}/${file}/index`];
+    entry[name] = [...COMMON_ENTRY, `${PAGES_DIR}/${file}/index.js`];
   });
 
   return entry;
@@ -38,7 +38,8 @@ function getMultiPagesPlugins () {
   const plugins = [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/index.html'
+      template: './src/index.html',
+      chunks: ['index']
     }),
   ];
 
