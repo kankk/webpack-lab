@@ -27,6 +27,16 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js'
   },
+  // resolve
+  resolve: {
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules')
+    ],
+    alias: {
+      components: path.resolve(__dirname, '/src/components')
+    }
+  },
   // loaders
   module: {
     rules: [{
