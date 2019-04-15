@@ -2,6 +2,8 @@ const path = require('path');
 
 // 生成HTML页面
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// 每次打包删除dist文件
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 // 抽离CSS
 const MinicssExtractPlugin = require('mini-css-extract-plugin');
 // 压缩分离后的css
@@ -107,5 +109,6 @@ module.exports = {
     // new PurifycssPlugin({
     //   paths: glob.sync(path.join(__dirname, 'src/*.html'))
     // })
+    new CleanWebpackPlugin(),
   ],
 }
