@@ -12,6 +12,9 @@ const OptimizeCSS = require('optimize-css-assets-webpack-plugin');
 const glob = require('glob');
 const PurifycssPlugin = require('purifycss-webpack');
 
+// 自定义 Plugins
+const TimerPlugin = require('./plugins/TimerPlugin');
+
 // 优化
 const WebpackUtils = require('./webpack-utils');
 
@@ -24,17 +27,17 @@ module.exports = {
   // },
   entry: WebpackUtils.getMultiPagesEntry(),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].[hash].js'
   },
   // resolve
   resolve: {
     modules: [
-      path.resolve(__dirname, 'src'),
-      path.resolve(__dirname, 'node_modules')
+      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, '../node_modules')
     ],
     alias: {
-      components: path.resolve(__dirname, '/src/components')
+      components: path.resolve(__dirname, '../src/components')
     },
     extensions: [ '.tsx', '.ts', '.js' ]
   },
@@ -44,7 +47,7 @@ module.exports = {
       test: /\.js$/,
       use: ['babel-loader'],
       exclude: /node_modules/, // 排除不要加载的文件夹
-      include: path.resolve(__dirname, 'src') // 指定需要加载的文件夹
+      include: path.resolve(__dirname, '../src') // 指定需要加载的文件夹
     }, {
       // 图片文件
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -101,7 +104,12 @@ module.exports = {
       test: /\.ts$/,
       use: 'ts-loader',
       exclude: /node_modules/
-    }]
+    }, {
+      test: /\.md$/,
+      use: [{
+        loader: path.resolve(__dirname, './loaders/MarkdownLoader.js')
+      }]
+    },]
   },
   // optimization
   optimization: {
@@ -168,5 +176,6 @@ module.exports = {
     //   paths: glob.sync(path.join(__dirname, 'src/*.html'))
     // })
     new CleanWebpackPlugin(),
+    new TimerPlugin()
   ],
 }

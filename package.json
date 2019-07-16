@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progres --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "dev": "webpack-dev-server --progres --open --config build/webpack.dev.js",
+    "build": "webpack --config build/webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "markdown-it": "^9.0.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
